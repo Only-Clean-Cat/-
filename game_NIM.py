@@ -47,17 +47,28 @@ cprint('ПУСТЬ ПОБЕДИТ СИЛЬНЕЙШИЙ!', color='red')
 put_stones()
 user_number = 1
 while True:
+    print(_holder)
     cprint('Текущая позиция', color='green')
     cprint(get_bunches(), color='green')
     user_color = 'blue' if user_number == 1 else 'yellow'
     cprint('Ход игрока {}'.format(user_number), color=user_color)
-    pos = input(colored('Откуда берем?', color=user_color))
-    qua = input(colored('Сколько берем?', color=user_color))
+    where_from = input(colored('Откуда берем?', color=user_color))
+    try:
+        pos = int(where_from)
+    except ValueError:
+        cprint('Невозможный ход! Введите цифру!', color='red')
+        continue
+    how_many = input(colored('Сколько берем?', color=user_color))
+    try:
+        qua = int(how_many)
+    except ValueError:
+        cprint('Невозможный ход! Введите цифру', color='red')
+        continue
     step_successed = take_from_bunch(position=int(pos), quantity=int(qua))
     if step_successed:
         user_number = 2 if user_number == 1 else 1
     else:
-        cprint('Невозможный ход!', color='red')
+        cprint('Невозможный ход! Введите правильный номер "кучки"', color='red')
     if is_gameover():
         break
 
